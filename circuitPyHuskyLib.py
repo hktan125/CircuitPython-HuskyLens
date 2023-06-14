@@ -206,12 +206,12 @@ class HuskyLensLibrary:
     def arrows(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002232")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
     
     def blocks(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002131")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
     
     def clearText(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"003545")
@@ -241,17 +241,17 @@ class HuskyLensLibrary:
     def learned(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002333")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
     
     def learnedArrows(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002535")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
     
     def learnedBlocks(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002434")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
     
     def learnedObjCount(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
@@ -281,7 +281,7 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
 
     def getBlocksByID(self, idVal):
         idVal = "{:04x}".format(idVal)
@@ -290,7 +290,7 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
 
     def getArrowsByID(self, idVal):
         idVal = "{:04x}".format(idVal)
@@ -299,7 +299,7 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()[0]
+        return self.processReturnData()
 
     def learn(self, id):
         cmd = commandHeaderAndAddress
