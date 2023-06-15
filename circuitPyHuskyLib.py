@@ -17,8 +17,8 @@
 import board
 from circuitPyHuskyLib import HuskyLensLibrary
 
-# Serial
-huskylens = HuskyLensLibrary("SERIAL", TX=board.GP8, RX=board.GP9)
+# UART
+huskylens = HuskyLensLibrary("UART", TX=board.GP8, RX=board.GP9)
 
 # I2C
 #huskylens = HuskyLensLibrary("I2C", SCL=board.GP9, SDA=board.GP8)
@@ -68,19 +68,19 @@ class HuskyLensLibrary:
         self.proto = proto
         self.address = address
         
-        if (proto == "SERIAL"):
+        if (proto == "UART"):
             self.huskylensSer = busio.UART(TX, RX, baudrate=baudrate)
         elif (proto == "I2C"):
             i2c = busio.I2C(SCL, SDA)
             self.huskylensSer = i2c_device.I2CDevice(i2c, address)
         else:
-            raise ValueError('Only support SERIAL or I2C protocol')
+            raise ValueError('Only support UART or I2C protocol')
         
         self.lastCmdSent = ""
         
     def writeToHuskyLens(self, cmd):
         self.lastCmdSent = cmd
-        if (self.proto == "SERIAL"):
+        if (self.proto == "UART"):
             self.huskylensSer.write(cmd)
         else:
             with self.huskylensSer:
@@ -111,7 +111,7 @@ class HuskyLensLibrary:
         
     def getBlockOrArrowCommand(self):
         byteString=b''
-        if (self.proto == "SERIAL"):
+        if (self.proto == "UART"):
             byteString = self.huskylensSer.read(5)
             byteString += self.huskylensSer.read(int(byteString[3]))
             byteString += self.huskylensSer.read(1)
@@ -131,7 +131,7 @@ class HuskyLensLibrary:
         byteString=b''
         if (inProduction):
             try:
-                if (self.proto == "SERIAL"):
+                if (self.proto == "UART"):
                     byteString = self.huskylensSer.read(5)
                     byteString += self.huskylensSer.read(int(byteString[3]))
                     byteString += self.huskylensSer.read(1)
