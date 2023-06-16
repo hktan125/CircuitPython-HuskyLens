@@ -170,9 +170,14 @@ class HuskyLensLibrary:
                     for i in returnData:
                         tmp = []
                         for q in range(0, len(i), 4):
-                            tmp.append(int(i[q:q+2], 16)+int(i[q+2:q+4], 16))
+                            low = int(i[q:q+2], 16)
+                            high = int(i[q+2:q+4], 16)
+                            if (high > 0):
+                                val = low + 255 + high
+                            else:
+                                val = low
+                            tmp.append(val)
                         finalData.append(tmp)
-                        #tmp = []
                     ret = self.convert_to_class_object(finalData, isBlock)
                     if(numIdLearnFlag):
                         ret.append(numberOfIDLearned)
@@ -376,3 +381,4 @@ class HuskyLensLibrary:
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
+
