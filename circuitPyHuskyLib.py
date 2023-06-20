@@ -8,7 +8,7 @@
 # Code base (reference) for Raspberry Pi Pico (MicroPython):
 # https://community.dfrobot.com/makelog-310469.html
 #
-# You need to include these libraries in your CIRCUITPY/lib folder. You can download it from https://circuitpython.org/libraries
+# You need to include these libraries in your CIRCUITPY/lib folder. You can download it from https://circuitpython.org/libraries
 # - adafruit_bus_device
 #
 
@@ -27,7 +27,6 @@ print(huskylens.knock())
 '''
 
 import binascii
-import time
 import busio
 import adafruit_bus_device.i2c_device as i2c_device
 
@@ -269,7 +268,8 @@ class HuskyLensLibrary:
         return self.processReturnData()
     
     def savePictureToSDCard(self):
-        self.huskylensSer.timeout=5
+        if (self.proto == "UART"):
+            self.huskylensSer.timeout=5
         cmd = self.cmdToBytes(commandHeaderAndAddress+"003040")
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
@@ -381,4 +381,3 @@ class HuskyLensLibrary:
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
-
