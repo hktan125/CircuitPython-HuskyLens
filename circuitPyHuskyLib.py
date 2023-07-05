@@ -51,7 +51,6 @@ class Arrow:
         self.learned= True if ID > 0 else False
         self.type="ARROW"
 
-
 class Block:
     def __init__(self, x, y , width , height, ID):
         self.x = x
@@ -197,115 +196,11 @@ class HuskyLensLibrary:
             tmp.append(obj)
         return tmp
     
-    def algorithm(self, alg):
-        if alg in algorthimsByteID:
-            cmd = commandHeaderAndAddress+"022d"+algorthimsByteID[alg]
-            cmd += self.calculateChecksum(cmd)
-            cmd = self.cmdToBytes(cmd)
-            self.writeToHuskyLens(cmd)
-            return self.processReturnData()
-        else:
-            print("INCORRECT ALGORITHIM NAME")
-
-    def arrows(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002232")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def blocks(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002131")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def clearText(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"003545")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def count(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
-        self.writeToHuskyLens(cmd)
-        return len(self.processReturnData())
-    
-    def frameNumber(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData(frameFlag=True)[-1]
-    
-    def forget(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"003747")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
     def knock(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002c3c")
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
     
-    def learned(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002333")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def learnedArrows(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002535")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def learnedBlocks(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002434")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def learnedObjCount(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData(numIdLearnFlag=True)[-1]
-    
-    def requestAll(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def savePictureToSDCard(self):
-        if (self.proto == "UART"):
-            self.huskylensSer.timeout=5
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"003040")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def saveScreenshotToSDCard(self):
-        cmd = self.cmdToBytes(commandHeaderAndAddress+"003949")
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-    
-    def getObjectByID(self, idVal):
-        idVal = "{:04x}".format(idVal)
-        idVal = idVal[2:]+idVal[0:2]
-        cmd = commandHeaderAndAddress+"0226"+idVal
-        cmd += self.calculateChecksum(cmd)
-        cmd = self.cmdToBytes(cmd)
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-
-    def getBlocksByID(self, idVal):
-        idVal = "{:04x}".format(idVal)
-        idVal = idVal[2:]+idVal[0:2]
-        cmd = commandHeaderAndAddress+"0227"+idVal
-        cmd += self.calculateChecksum(cmd)
-        cmd = self.cmdToBytes(cmd)
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-
-    def getArrowsByID(self, idVal):
-        idVal = "{:04x}".format(idVal)
-        idVal = idVal[2:]+idVal[0:2]
-        cmd = commandHeaderAndAddress+"0228"+idVal
-        cmd += self.calculateChecksum(cmd)
-        cmd = self.cmdToBytes(cmd)
-        self.writeToHuskyLens(cmd)
-        return self.processReturnData()
-
     def learn(self, id):
         cmd = commandHeaderAndAddress
         data = "{:04x}".format(id)
@@ -318,6 +213,11 @@ class HuskyLensLibrary:
         cmd += data
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def forget(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"003747")
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
     
@@ -364,6 +264,16 @@ class HuskyLensLibrary:
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
     
+    def clearText(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"003545")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def requestAll(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
     def saveModelToSDCard(self,idVal):
         idVal = "{:04x}".format(idVal)
         idVal = idVal[2:]+idVal[0:2]
@@ -381,3 +291,92 @@ class HuskyLensLibrary:
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
         return self.processReturnData()
+    
+    def savePictureToSDCard(self):
+        if (self.proto == "UART"):
+            self.huskylensSer.timeout=5
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"003040")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def saveScreenshotToSDCard(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"003949")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def blocks(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002131")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def arrows(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002232")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def learned(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002333")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def learnedBlocks(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002434")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+        
+    def learnedArrows(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002535")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+        
+    def getObjectByID(self, idVal):
+        idVal = "{:04x}".format(idVal)
+        idVal = idVal[2:]+idVal[0:2]
+        cmd = commandHeaderAndAddress+"0226"+idVal
+        cmd += self.calculateChecksum(cmd)
+        cmd = self.cmdToBytes(cmd)
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+
+    def getBlocksByID(self, idVal):
+        idVal = "{:04x}".format(idVal)
+        idVal = idVal[2:]+idVal[0:2]
+        cmd = commandHeaderAndAddress+"0227"+idVal
+        cmd += self.calculateChecksum(cmd)
+        cmd = self.cmdToBytes(cmd)
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+
+    def getArrowsByID(self, idVal):
+        idVal = "{:04x}".format(idVal)
+        idVal = idVal[2:]+idVal[0:2]
+        cmd = commandHeaderAndAddress+"0228"+idVal
+        cmd += self.calculateChecksum(cmd)
+        cmd = self.cmdToBytes(cmd)
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData()
+    
+    def algorithm(self, alg):
+        if alg in algorthimsByteID:
+            cmd = commandHeaderAndAddress+"022d"+algorthimsByteID[alg]
+            cmd += self.calculateChecksum(cmd)
+            cmd = self.cmdToBytes(cmd)
+            self.writeToHuskyLens(cmd)
+            return self.processReturnData()
+        else:
+            print("INCORRECT ALGORITHIM NAME")
+    
+    def count(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
+        self.writeToHuskyLens(cmd)
+        return len(self.processReturnData())
+    
+    def learnedObjCount(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData(numIdLearnFlag=True)[-1]
+    
+    def frameNumber(self):
+        cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
+        self.writeToHuskyLens(cmd)
+        return self.processReturnData(frameFlag=True)[-1]
