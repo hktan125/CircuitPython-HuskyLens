@@ -4,15 +4,12 @@ HuskyLens SEN0305 using CircuitPython
 # HUSKYLENS CircuitPython Library
 09 JUN 2023
 
-Credit:
+<p>Credit:</p>
+<p>HuskyLens (Python): <br/>
+https://github.com/HuskyLens/HUSKYLENSPython</p>
 
-(Python):
-
-https://github.com/HuskyLens/HUSKYLENSPython
- 
-(MicroPython):
-
-https://community.dfrobot.com/makelog-310469.html
+<p>RRoy from DFRobot community (MicroPython):<br/>
+https://community.dfrobot.com/makelog-310469.html</p>
 
 <h3>Quick Start</h3>
 <blockquote>
