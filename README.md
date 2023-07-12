@@ -1,4 +1,4 @@
-# CircuitPythonHuskyLens
+# CircuitPython-HuskyLens
 HuskyLens SEN0305 using CircuitPython
 
 # HUSKYLENS CircuitPython Library
