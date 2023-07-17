@@ -9,7 +9,7 @@ from adafruit_motor import motor
 
 from circuitPyHuskyLib import HuskyLensLibrary
 
-DIST_THRESHOLD = 20
+DIST_THRESHOLD = 30
 SPEED = 0.3
 MOVE = True
 
