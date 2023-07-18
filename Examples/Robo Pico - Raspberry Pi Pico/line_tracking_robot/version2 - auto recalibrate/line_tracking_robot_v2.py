@@ -59,6 +59,7 @@ def euclideanDist(p1, p2):
     return sqrt((x1-x2)**2+(y1-y2)**2)
 
 def calibration(p1, p2):
+    # Calibrate if the midpoint of the line is not in region as shown in the draft
     xmid, ymid = find_line_midpoint(p1, p2)
     
     if (xmid > 80 and xmid <= 240 and ymid > 60 and ymid <= 180):
@@ -110,7 +111,9 @@ def findAngle(p1, p2):
     return degrees(acos((a_dist * a_dist + h_dist * h_dist - o_dist * o_dist)/(2.0 * a_dist * h_dist)))
 
 def deg_to_speed(deg, turn, maxSpeed=INIT_SPEED):
-    if deg > ANGLE_THRESHOLD:
+    if deg > ANGLE_THRESHOLD: # Stop moving
+        # (-)INIT_SPEED because we will add INIT_SPEED later
+        # -0.3 + 0.3 = 0
         return -INIT_SPEED, -INIT_SPEED
     
     speed = (deg/ANGLE_THRESHOLD) * maxSpeed
