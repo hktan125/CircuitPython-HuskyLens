@@ -22,7 +22,8 @@ VELOCITY = {
     'FRONT': (INIT_SPEED,INIT_SPEED),
     'BACK': (-INIT_SPEED,-INIT_SPEED),
     'LEFT': (-INIT_SPEED,INIT_SPEED),
-    'RIGHT': (INIT_SPEED,-INIT_SPEED)
+    'RIGHT': (INIT_SPEED,-INIT_SPEED),
+    'END_LINE': (0,0),
 }
 
 # Check
@@ -64,6 +65,9 @@ def calibration(p1, p2):
     
     if (xmid > 80 and xmid <= 240 and ymid > 60 and ymid <= 180):
         return None
+    
+    if (p1[1] > 120):
+        return "END_LINE"
     
     if (ymid > 0 and ymid <= 60):
         return "FRONT"
