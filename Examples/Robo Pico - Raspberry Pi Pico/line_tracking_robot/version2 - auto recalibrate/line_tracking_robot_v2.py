@@ -1,4 +1,5 @@
 # line_tracking_robot_v2.py
+# version 2
 import time
 import board
 import digitalio
@@ -16,7 +17,7 @@ hl.clearText()
 MOVE = True
 L, R = 0, 0
 ANGLE_THRESHOLD = 89
-INIT_SPEED = 0.3
+INIT_SPEED = 0.5
 
 VELOCITY = {
     'FRONT': (INIT_SPEED,INIT_SPEED),
@@ -62,12 +63,14 @@ def euclideanDist(p1, p2):
 def calibration(p1, p2):
     # Calibrate if the midpoint of the line is not in region as shown in the draft
     xmid, ymid = find_line_midpoint(p1, p2)
+    xHead, yHead = p1
+    xTail, yTail = p2
     
     if (xmid > 80 and xmid <= 240 and ymid > 60 and ymid <= 180):
         return None
     
-    if (p1[1] > 120):
-        return "END_LINE"
+    #if (p1[1] > 120):
+        #return "END_LINE"
     
     if (ymid > 0 and ymid <= 60):
         return "FRONT"
@@ -161,6 +164,13 @@ while True:
         
     else:
         L,R = 0, 0
+    
+    # Limit to maximum = 1.0
+    if L > 1.0:
+        L = 1.0
+    
+    if R > 1.0:
+        R = 1.0
     
     print(L,R)
     Robot_Movement(L,R)
