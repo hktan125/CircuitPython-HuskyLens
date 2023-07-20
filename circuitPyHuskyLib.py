@@ -54,7 +54,9 @@ class Arrow:
 class Block:
     def __init__(self, x, y , width , height, ID):
         self.x = x
-        self.y=y
+        self.y = y
+        self.x_topleft = abs(x - width//2)
+        self.y_topleft = abs(y - height//2)
         self.width=width
         self.height=height
         self.ID=ID
