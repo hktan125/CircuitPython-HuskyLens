@@ -64,10 +64,13 @@ class Block:
         self.type="BLOCK"
 
 class HuskyLensLibrary:
-    def __init__(self, proto, TX=None, RX=None, SCL=None, SDA=None, baudrate=9600, address=0x32):
+    # Constant Value
+    SHAPE = (320, 240)
+    
+    def __init__(self, proto, TX=None, RX=None, SCL=None, SDA=None, baudrate=9600, address=0x32, verbose=True):
         self.proto = proto
         self.address = address
-        
+        self.verbose = verbose
         if (proto == "UART"):
             self.huskylensSer = busio.UART(TX, RX, baudrate=baudrate)
         elif (proto == "I2C"):
@@ -158,7 +161,8 @@ class HuskyLensLibrary:
                     
                     # Return empty list when no object is detected
                     if not (numberOfBlocksOrArrow):
-                        print("No Object detected")
+                        if self.verbose:
+                            print("No Object detected")
                         return []
                     
                     for i in range(numberOfBlocksOrArrow):
