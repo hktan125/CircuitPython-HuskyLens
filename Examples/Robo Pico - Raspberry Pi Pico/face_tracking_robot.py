@@ -1,4 +1,4 @@
-# Face tracking robot
+# face_tracking_robot.py
 
 import time
 import board
@@ -10,8 +10,8 @@ from adafruit_motor import motor
 from circuitPyHuskyLib import HuskyLensLibrary
 
 DIST_THRESHOLD = 20
-AREA_NEAR_THRESHOLD = 20000
-AREA_FAR_THRESHOLD = 9000
+AREA_NEAR_THRESHOLD = 9000
+AREA_FAR_THRESHOLD = 3500
 
 hl = HuskyLensLibrary('UART', TX=board.GP12, RX=board.GP13)
 hl.algorithm("ALGORITHM_FACE_RECOGNITION") # Redirect to face Function
@@ -44,6 +44,7 @@ MOVE = True
 RECOGNITION = True
 
 def show_text(movement, mode):
+    hl.algorithm("ALGORITHM_FACE_RECOGNITION") # Redirect to face Function
     if movement:
         hl.customText('ON', 280, 20)
     else:
@@ -84,6 +85,40 @@ def findPosition(p1, p2=(160,120)):
 def get_area(result):
     return result.ID, result.width * result.height
 
+def get_max_area(list_of_id_area):
+    # Sort the list_of_id_area based on the ID
+    sorted_list = sorted(list_of_id_area, key=lambda x: x[0])
+
+    # Create a dictionary to store the grouped data
+    grouped_data = {}
+
+    # Iterate over the sorted list and group the data by the ID
+    for item in sorted_list:
+        id = item[0]
+        area = item[1]
+        
+        if id not in grouped_data:
+            grouped_data[id] = []
+        
+        grouped_data[id].append(area)
+
+    # Find the maximum area and corresponding ID
+    max_area = 0
+    max_id = None
+
+    for id, areas in grouped_data.items():
+        max_area_in_group = max(areas)
+        
+        if max_area_in_group > max_area:
+            max_area = max_area_in_group
+            max_id = id
+    
+    
+    idx = list_of_id_area.index((max_id, max_area))
+    
+    # Print the maximum area and corresponding ID(in huskylens), and idx(index in list)
+    return max_id, max_area, idx
+
 show_text(MOVE, RECOGNITION)
 L,R = 0.0, 0.0
 while True:
@@ -107,7 +142,10 @@ while True:
         results = hl.blocks()
     
     if MOVE and results:
-        r = results[0]
+        area_list = list(map(get_area, results)) # Calculate area for each result
+        print(area_list)
+        max_id, max_area, idx_max = get_max_area(area_list)
+        r = results[idx_max]
         #print(f"[{r.type}] (x:{r.x}, y:{r.y}), w:{r.width}, h:{r.height}")
         
         dist = euclideanDist((r.x,r.y))
@@ -138,6 +176,7 @@ while True:
             R += 0.3
         else:
             L,R = 0,0
+        print(area)
     else:
         L,R=0,0
     
@@ -145,3 +184,4 @@ while True:
     Robot_Movement(L, R)
     L,R = 0,0 # Reset
     time.sleep(0.1)
+
