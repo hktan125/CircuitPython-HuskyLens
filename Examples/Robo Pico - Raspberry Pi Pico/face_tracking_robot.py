@@ -174,8 +174,7 @@ while True:
         elif area < AREA_FAR_THRESHOLD:
             L += 0.3
             R += 0.3
-        else:
-            L,R = 0,0
+        
         print(area)
     else:
         L,R=0,0
@@ -184,4 +183,3 @@ while True:
     Robot_Movement(L, R)
     L,R = 0,0 # Reset
     time.sleep(0.1)
-
