@@ -252,7 +252,7 @@ Either `[block1, block2, ..., blockN]` or `[arrow1, arrow2, ..., arrowN]`
 > **Description:**  
 > - Place a string of text (less than 20 characters) on top of the HuskyLens UI. 
 > - You can have at most 10 custom texts on the UI at once, and if you continue adding texts you will replace the previous texts in a circular fashion. 
-> Each text is uniquely identified by its (x, y) coordinate, so you can replace the text string at a (x, y) coordinate instead of adding a new text object. 
+> - Each text is uniquely identified by its (x, y) coordinate, so you can replace the text string at a (x, y) coordinate instead of adding a new text object. 
 > 
 > **Arguments:**
 > - name: (`str`) value for the desired text.  
