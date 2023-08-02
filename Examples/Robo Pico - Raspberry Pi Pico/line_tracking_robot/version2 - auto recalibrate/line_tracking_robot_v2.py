@@ -14,7 +14,7 @@ hl.algorithm("ALGORITHM_LINE_TRACKING") # Redirect to Line Tracking Function
 hl.clearText()
 
 # Init value
-MOVE = True
+MOVE = False
 L, R = 0, 0
 ANGLE_THRESHOLD = 89
 INIT_SPEED = 0.5
@@ -136,9 +136,19 @@ def Robot_Movement(sL, sR):
     motorL.throttle = sL
     motorR.throttle = sR
 
+def show_text(movement):
+    hl.algorithm("ALGORITHM_LINE_TRACKING") # Redirect to Line Tracking Function
+    if movement:
+        hl.customText('ON', 280, 20)
+    else:
+        hl.customText('OFF', 270, 20)
+
+show_text(MOVE)
 while True:
     if gp20.value == False:
         MOVE = not MOVE
+        hl.clearText()
+        show_text(MOVE)
         while gp20.value == False: # Wait until button is release
             pass
     
@@ -176,3 +186,4 @@ while True:
     Robot_Movement(L,R)
     #L,R = 0,0 # Reset
     time.sleep(0.1)
+
