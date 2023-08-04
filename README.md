@@ -12,9 +12,9 @@ RRoy from DFRobot community (MicroPython):
 https://community.dfrobot.com/makelog-310469.html
 
 ### Quick Start
-> Place the [circuitPyHuskyLib.py](/circuitPyHuskyLib.py) file within your projects folder.
+> Place the [circuitPyHuskyLib.py](/circuitPyHuskyLib.py) file in your **CIRCUITPY/lib** folder.
 > 
-> You need to include this library in your **CIRCUITPY/lib** folder. 
+> You also need to include this library in your **CIRCUITPY/lib** folder. 
 > You can download it from https://circuitpython.org/libraries
 > - adafruit_bus_device
 > 
