@@ -41,7 +41,7 @@ gp21 = digitalio.DigitalInOut(board.GP21)
 gp21.direction = digitalio.Direction.INPUT
 
 MOVE = True
-RECOGNITION = True
+RECOGNITION = False
 
 def show_text(movement, mode):
     hl.algorithm("ALGORITHM_FACE_RECOGNITION") # Redirect to face Function
