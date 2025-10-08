@@ -1,5 +1,5 @@
 # HUSKYLENS CircuitPython Library
-# 09 JUN 2023
+# 08 OCT 2025
 #
 # Credit:
 # Code base (reference) for Raspberry Pi:
@@ -7,6 +7,8 @@
 # 
 # Code base (reference) for Raspberry Pi Pico (MicroPython):
 # https://community.dfrobot.com/makelog-310469.html
+#
+# OCT 2025 - Updated by Brogan M. Pratt for HuskyLens Firmware v0.5.1b
 #
 # You need to include these libraries in your CIRCUITPY/lib folder. You can download it from https://circuitpython.org/libraries
 # - adafruit_bus_device
@@ -146,6 +148,10 @@ class HuskyLensLibrary:
                     with self.huskylensSer:
                         self.huskylensSer.readinto(byteString, start=5, end=len(byteString))
                 
+                # TODO: remove debug line
+                #print("RAW RESPONSE:", ''.join(['%02x' % b for b in byteString]))
+
+
                 # Convert byteString to hex first before splitCommandToParts
                 commandSplit = self.splitCommandToParts(''.join(['%02x' % b for b in byteString]))
                 if(commandSplit[3] == "2e"):
@@ -220,12 +226,12 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()
+        return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def forget(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"003747")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()
+        return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def setCustomName(self, name, id):
         localId = "{:02x}".format(id)
@@ -243,7 +249,7 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()
+        return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def customText(self, name, x, y):
         name_=""
@@ -268,12 +274,12 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()
+        return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def clearText(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"003545")
         self.writeToHuskyLens(cmd)
-        return self.processReturnData()
+        return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def requestAll(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002030")
@@ -368,7 +374,7 @@ class HuskyLensLibrary:
             cmd += self.calculateChecksum(cmd)
             cmd = self.cmdToBytes(cmd)
             self.writeToHuskyLens(cmd)
-            return self.processReturnData()
+            return # depreciated on firmware > 0.5.1, no return self.processReturnData()
         else:
             print("INCORRECT ALGORITHIM NAME")
     

@@ -217,8 +217,7 @@ Either `[block1, block2, ..., blockN]` or `[arrow1, arrow2, ..., arrowN]`
 > "ALGORITHM_OBJECT_CLASSIFICATION"
 >  ```   
 > 
-> **Return:**
-> "Knock Received" on success
+> As of firmware 0.5.1b, no return value is sent. 
 
 #### learn(id)
 > **Description:**  
@@ -227,15 +226,13 @@ Either `[block1, block2, ..., blockN]` or `[arrow1, arrow2, ..., arrowN]`
 > **Arguments:**
 > - id: (`int`) The desired ID of the object (1 - 1023 range). 
 > 
-> **Return:**  
-> "Knock Received" on success
+> As of firmware 0.5.1b, no return value is sent.
 
 #### forget()
 > **Description:**  
 > Forget learned objects for the current running algorithm. 
 > 
-> **Return:**  
-> "Knock Received" on success
+> As of firmware 0.5.1b, no return value is sent.
 
 ## UI Related Functions
 #### setCustomName(name, id)
@@ -246,8 +243,7 @@ Either `[block1, block2, ..., blockN]` or `[arrow1, arrow2, ..., arrowN]`
 > - name: (`str`) value for the desired name.  
 > - id: (`int`) the object ID you wish to change.  
 > 
-> **Return:**  
-> "Knock Received" on success
+> As of firmware 0.5.1b, no return value is sent.
 
 #### customText(name, x, y)
 > **Description:**  
@@ -260,15 +256,13 @@ Either `[block1, block2, ..., blockN]` or `[arrow1, arrow2, ..., arrowN]`
 > - x: (`int`) x coordinate of the top left corner of the text 
 > - y: (`int`) y coordinate of the top left corner of the text
 > 
-> **Return:**  
-> "Knock Received" on success
+> As of firmware 0.5.1b, no return value is sent.
 
 #### clearText()
 > **Description:**  
 > Clear and remove all custom UI texts from the screen. 
 > 
-> **Return:**  
-> "Knock Received" on success
+> As of firmware 0.5.1b, no return value is sent.
 
 ## Utility Functions
 #### saveModelToSDCard(idVal)
