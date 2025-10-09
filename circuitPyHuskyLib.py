@@ -31,6 +31,7 @@ print(huskylens.knock())
 import binascii
 import busio
 import adafruit_bus_device.i2c_device as i2c_device
+from time import sleep
 
 commandHeaderAndAddress = "55AA11"
 algorthimsByteID = {
@@ -211,6 +212,7 @@ class HuskyLensLibrary:
     def knock(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"002c3c")
         self.writeToHuskyLens(cmd)
+        sleep(0.1)
         return self.processReturnData()
     
     def learn(self, id):
@@ -226,11 +228,13 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
+        sleep(0.1)
         return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def forget(self):
         cmd = self.cmdToBytes(commandHeaderAndAddress+"003747")
         self.writeToHuskyLens(cmd)
+        sleep(0.1)
         return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def setCustomName(self, name, id):
@@ -249,6 +253,8 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
+        sleep(0.1)
+        # add a small 0.1s sleep here if renaming multiple tags in quick succession
         return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def customText(self, name, x, y):
@@ -274,6 +280,7 @@ class HuskyLensLibrary:
         cmd += self.calculateChecksum(cmd)
         cmd = self.cmdToBytes(cmd)
         self.writeToHuskyLens(cmd)
+        sleep(0.1)
         return # depreciated on firmware > 0.5.1, no return self.processReturnData()
     
     def clearText(self):
@@ -374,6 +381,7 @@ class HuskyLensLibrary:
             cmd += self.calculateChecksum(cmd)
             cmd = self.cmdToBytes(cmd)
             self.writeToHuskyLens(cmd)
+            sleep(0.1)
             return # depreciated on firmware > 0.5.1, no return self.processReturnData()
         else:
             print("INCORRECT ALGORITHIM NAME")
